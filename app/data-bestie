@@ -1,0 +1,2037 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>🧩 DataBestie – Asisten JSON Interaktif</title>
+
+    <!-- Phosphor Icons — dipilih karena: outline bersih, konsisten, ringan, dan sangat selaras dengan estetika iOS/SF -->
+    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+
+    <style>
+        :root {
+            /* ============ PALET EARTH & SOFT PASTEL — LIGHT MODE ============ */
+            --page-bg: #f9f5ef;
+            --surface: #ffffff;
+            --surface-secondary: #f6f1e8;
+            --surface-tertiary: #f0e9dc;
+            --text-primary: #3d3025;
+            --text-secondary: #7a6e60;
+            --text-tertiary: #a89885;
+            --accent-primary: #7d9d6f;
+            --accent-primary-hover: #6b8a5e;
+            --accent-primary-soft: #e8f0e3;
+            --accent-warm: #c48b6d;
+            --accent-warm-hover: #b0785a;
+            --accent-warm-soft: #fdf0e8;
+            --accent-amber: #d4a853;
+            --accent-amber-soft: #fef9f0;
+            --accent-mint: #7eb99e;
+            --accent-mint-soft: #eaf6f0;
+            --accent-rose: #d4958b;
+            --accent-rose-soft: #fdf2ef;
+            --accent-lavender: #b8a9c9;
+            --accent-lavender-soft: #f3eff8;
+            --border: #e5dcd0;
+            --border-light: #f0e9dc;
+            --shadow-sm: 0 1px 3px rgba(61, 48, 37, 0.06);
+            --shadow-md: 0 4px 16px rgba(61, 48, 37, 0.08);
+            --shadow-lg: 0 12px 40px rgba(61, 48, 37, 0.12);
+            --shadow-xl: 0 20px 60px rgba(61, 48, 37, 0.16);
+            --bot-bubble: #f3efe7;
+            --user-bubble: #e8f0e3;
+            --input-bg: #faf7f2;
+            --input-border: #e5dcd0;
+            --input-focus-ring: rgba(125, 157, 111, 0.3);
+            --overlay-bg: rgba(30, 25, 20, 0.35);
+            --grab-handle: #d5c9b8;
+            --toast-bg: #3d3025;
+            --toast-text: #f9f5ef;
+            --highlight-bg: #fef3c7;
+            --highlight-text: #3d3025;
+            --danger: #d4958b;
+            --danger-hover: #c17a6f;
+            --color-object: #b8a9c9;
+            --color-object-bg: #f3eff8;
+            --color-array: #9bb5c9;
+            --color-array-bg: #eef4f8;
+            --color-string: #7eb99e;
+            --color-string-bg: #eaf6f0;
+            --color-number: #d4a853;
+            --color-number-bg: #fef9f0;
+            --color-boolean: #d4958b;
+            --color-boolean-bg: #fdf2ef;
+            --color-key: #c5beb5;
+            --color-key-bg: #faf7f2;
+            --radius-2xl: 2rem;
+            --radius-xl: 1.5rem;
+            --radius-lg: 1.1rem;
+            --radius-md: 0.8rem;
+            --radius-sm: 0.6rem;
+            --radius-full: 9999px;
+            --font-stack: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', system-ui, sans-serif;
+            --font-mono: 'SF Mono', 'JetBrains Mono', 'Fira Code', monospace;
+            --transition-fast: 0.18s cubic-bezier(0.25, 0.1, 0.25, 1);
+            --transition-smooth: 0.28s cubic-bezier(0.25, 0.1, 0.25, 1);
+            --transition-spring: 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            --transition-modal: 0.38s cubic-bezier(0.32, 0.72, 0, 1);
+        }
+
+        [data-theme="dark"] {
+            --page-bg: #1c1815;
+            --surface: #25211d;
+            --surface-secondary: #2a2520;
+            --surface-tertiary: #322c26;
+            --text-primary: #e8dfd5;
+            --text-secondary: #b5a595;
+            --text-tertiary: #8a7b6b;
+            --accent-primary: #8db580;
+            --accent-primary-hover: #7a9e6e;
+            --accent-primary-soft: #1e2a1c;
+            --accent-warm: #d49575;
+            --accent-warm-hover: #c08060;
+            --accent-warm-soft: #2a1f18;
+            --accent-amber: #d4a853;
+            --accent-amber-soft: #2a2214;
+            --accent-mint: #7eb99e;
+            --accent-mint-soft: #1a2822;
+            --accent-rose: #d4958b;
+            --accent-rose-soft: #2a1c1a;
+            --accent-lavender: #b8a9c9;
+            --accent-lavender-soft: #201c28;
+            --border: #3a332c;
+            --border-light: #2e2823;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.2);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.4);
+            --shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.5);
+            --bot-bubble: #2a2520;
+            --user-bubble: #1e2a1c;
+            --input-bg: #1c1815;
+            --input-border: #3a332c;
+            --input-focus-ring: rgba(141, 181, 128, 0.35);
+            --overlay-bg: rgba(0, 0, 0, 0.55);
+            --grab-handle: #4a4238;
+            --toast-bg: #e8dfd5;
+            --toast-text: #1c1815;
+            --highlight-bg: #5c4a10;
+            --highlight-text: #fef3c7;
+            --danger: #d4958b;
+            --danger-hover: #c17a6f;
+            --color-object: #9b8ab8;
+            --color-object-bg: #201c28;
+            --color-array: #8aa8c0;
+            --color-array-bg: #1a2228;
+            --color-string: #6eaa8c;
+            --color-string-bg: #1a2822;
+            --color-number: #c4a048;
+            --color-number-bg: #2a2214;
+            --color-boolean: #c4857b;
+            --color-boolean-bg: #2a1c1a;
+            --color-key: #9a8e80;
+            --color-key-bg: #25211d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: var(--font-stack);
+            background: var(--page-bg);
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            color: var(--text-primary);
+            transition: background 0.35s ease, color 0.35s ease;
+            overscroll-behavior: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        /* ============ APP SHELL ============ */
+        .app {
+            width: 100%;
+            max-width: 520px;
+            height: 100vh;
+            height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            background: var(--surface);
+            box-shadow: var(--shadow-lg);
+            border-radius: 0;
+            overflow: hidden;
+            position: relative;
+            transition: background 0.35s ease, box-shadow 0.35s ease;
+        }
+
+        @media (min-width: 768px) {
+            .app {
+                max-width: 1050px;
+                height: 92vh;
+                height: 92dvh;
+                border-radius: var(--radius-2xl);
+                flex-direction: row;
+                box-shadow: var(--shadow-xl);
+            }
+        }
+
+        /* ============ HEADER ============ */
+        .header {
+            background: var(--surface);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 0.65rem 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-light);
+            flex-shrink: 0;
+            z-index: 20;
+            transition: background 0.35s ease, border-color 0.35s ease;
+        }
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 1.15rem;
+            font-weight: 680;
+            letter-spacing: -0.3px;
+            color: var(--text-primary);
+        }
+        .header-logo .logo-icon {
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+        .header-logo small {
+            font-size: 0.58rem;
+            font-weight: 500;
+            opacity: 0.6;
+            letter-spacing: 0.02em;
+        }
+        .header-actions {
+            display: flex;
+            gap: 0.25rem;
+            align-items: center;
+        }
+        .icon-btn {
+            background: transparent;
+            border: 1.5px solid transparent;
+            font-size: 1.15rem;
+            width: 2.35rem;
+            height: 2.35rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: all var(--transition-fast);
+            position: relative;
+            flex-shrink: 0;
+        }
+        .icon-btn:hover {
+            background: var(--surface-tertiary);
+            color: var(--text-primary);
+            transform: scale(1.05);
+            border-color: var(--border);
+        }
+        .icon-btn:active {
+            transform: scale(0.94);
+            transition: transform 0.1s ease;
+        }
+        .icon-btn.primary-accent {
+            background: var(--accent-primary);
+            color: #fff;
+            border: none;
+            box-shadow: 0 2px 8px rgba(125, 157, 111, 0.35);
+        }
+        .icon-btn.primary-accent:hover {
+            background: var(--accent-primary-hover);
+            box-shadow: 0 4px 14px rgba(125, 157, 111, 0.45);
+            color: #fff;
+        }
+
+        /* ============ CHAT AREA ============ */
+        .chat-container {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 0.75rem 0.8rem 0.4rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            scroll-behavior: smooth;
+            background: var(--surface);
+            transition: background 0.35s ease;
+            -webkit-overflow-scrolling: touch;
+        }
+        .chat-container::-webkit-scrollbar {
+            width: 3px;
+        }
+        .chat-container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .chat-container::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 10px;
+        }
+
+        .message {
+            display: flex;
+            flex-direction: column;
+            max-width: 87%;
+            animation: messageIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        @keyframes messageIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px) scale(0.96);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        .message.bot {
+            align-self: flex-start;
+        }
+        .message.user {
+            align-self: flex-end;
+        }
+        .bubble {
+            padding: 0.6rem 0.85rem;
+            border-radius: 1.2rem;
+            font-size: 0.84rem;
+            line-height: 1.55;
+            word-break: break-word;
+            letter-spacing: -0.1px;
+            transition: background 0.35s ease, color 0.35s ease, box-shadow 0.35s ease;
+        }
+        .bot .bubble {
+            background: var(--bot-bubble);
+            border-bottom-left-radius: 0.3rem;
+            color: var(--text-primary);
+            box-shadow: var(--shadow-sm);
+        }
+        .user .bubble {
+            background: var(--user-bubble);
+            border-bottom-right-radius: 0.3rem;
+            color: var(--text-primary);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+            margin-top: 0.5rem;
+        }
+        .chip {
+            background: var(--surface);
+            border: 1.2px solid var(--border);
+            padding: 0.4rem 0.85rem;
+            border-radius: var(--radius-full);
+            font-size: 0.76rem;
+            font-weight: 550;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            color: var(--text-primary);
+            box-shadow: var(--shadow-sm);
+            letter-spacing: -0.1px;
+            white-space: nowrap;
+        }
+        .chip:hover {
+            background: var(--accent-primary-soft);
+            border-color: var(--accent-primary);
+            transform: translateY(-1.5px);
+            box-shadow: var(--shadow-md);
+        }
+        .chip:active {
+            transform: scale(0.95);
+            transition: transform 0.1s ease;
+        }
+
+        /* ============ INPUT AREA ============ */
+        .input-area {
+            padding: 0.55rem 0.8rem;
+            padding-bottom: max(0.55rem, env(safe-area-inset-bottom));
+            background: var(--surface);
+            border-top: 1px solid var(--border-light);
+            display: flex;
+            gap: 0.45rem;
+            flex-shrink: 0;
+            align-items: center;
+            transition: background 0.35s ease, border-color 0.35s ease;
+            z-index: 15;
+        }
+        .input-area input {
+            flex: 1;
+            border: 1.8px solid var(--input-border);
+            border-radius: var(--radius-full);
+            padding: 0.6rem 1.1rem;
+            font-size: 0.84rem;
+            outline: none;
+            background: var(--input-bg);
+            color: var(--text-primary);
+            transition: all var(--transition-fast);
+            font-family: var(--font-stack);
+            letter-spacing: -0.1px;
+            min-width: 0;
+        }
+        .input-area input:focus {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3.5px var(--input-focus-ring);
+            background: var(--surface);
+        }
+        .input-area input::placeholder {
+            color: var(--text-tertiary);
+        }
+        .send-btn {
+            background: var(--accent-primary);
+            border: none;
+            border-radius: 50%;
+            width: 2.7rem;
+            height: 2.7rem;
+            font-size: 1.15rem;
+            cursor: pointer;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-fast);
+            box-shadow: 0 4px 12px rgba(125, 157, 111, 0.35);
+            flex-shrink: 0;
+        }
+        .send-btn:hover {
+            background: var(--accent-primary-hover);
+            transform: scale(1.06);
+            box-shadow: 0 6px 18px rgba(125, 157, 111, 0.45);
+        }
+        .send-btn:active {
+            transform: scale(0.92);
+            transition: transform 0.1s ease;
+        }
+
+        /* ============ TREE PANEL — DESKTOP ============ */
+        .tree-panel {
+            display: none;
+            flex-direction: column;
+            width: 44%;
+            background: var(--surface-secondary);
+            border-left: 1px solid var(--border-light);
+            overflow: hidden;
+            transition: background 0.35s ease, border-color 0.35s ease;
+        }
+        @media (min-width: 768px) {
+            .tree-panel {
+                display: flex;
+            }
+        }
+        .tree-panel-header {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border-light);
+            font-weight: 650;
+            font-size: 0.88rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--surface);
+            color: var(--text-primary);
+            letter-spacing: -0.15px;
+            flex-shrink: 0;
+        }
+        .tree-panel-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0.7rem;
+            -webkit-overflow-scrolling: touch;
+        }
+        .tree-panel-body::-webkit-scrollbar {
+            width: 3px;
+        }
+        .tree-panel-body::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .tree-panel-body::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 10px;
+        }
+        .tree-panel-actions {
+            padding: 0.6rem 0.8rem;
+            border-top: 1px solid var(--border-light);
+            display: flex;
+            gap: 0.4rem;
+            justify-content: flex-end;
+            background: var(--surface);
+            flex-shrink: 0;
+            flex-wrap: wrap;
+        }
+        .search-box {
+            padding: 0.45rem 0.8rem;
+            background: var(--surface-secondary);
+            border-bottom: 1px solid var(--border-light);
+            flex-shrink: 0;
+        }
+        .search-box input {
+            width: 100%;
+            padding: 0.5rem 0.75rem;
+            border-radius: var(--radius-full);
+            border: 1.5px solid var(--input-border);
+            font-size: 0.78rem;
+            background: var(--input-bg);
+            color: var(--text-primary);
+            outline: none;
+            font-family: var(--font-stack);
+            transition: all var(--transition-fast);
+        }
+        .search-box input:focus {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px var(--input-focus-ring);
+        }
+        .search-box input::placeholder {
+            color: var(--text-tertiary);
+        }
+
+        .drawer-btn {
+            background: var(--surface);
+            border: 1.2px solid var(--border);
+            padding: 0.42rem 0.85rem;
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            cursor: pointer;
+            font-weight: 550;
+            color: var(--text-primary);
+            transition: all var(--transition-fast);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            white-space: nowrap;
+            letter-spacing: -0.1px;
+        }
+        .drawer-btn:hover {
+            background: var(--surface-tertiary);
+            border-color: var(--accent-primary);
+            transform: translateY(-1px);
+        }
+        .drawer-btn:active {
+            transform: scale(0.95);
+        }
+        .drawer-btn.primary {
+            background: var(--accent-primary);
+            color: #fff;
+            border: none;
+            box-shadow: 0 2px 8px rgba(125, 157, 111, 0.3);
+        }
+        .drawer-btn.primary:hover {
+            background: var(--accent-primary-hover);
+            box-shadow: 0 4px 14px rgba(125, 157, 111, 0.4);
+            color: #fff;
+        }
+
+        /* ============ TREE MODAL — MOBILE BOTTOM SHEET ============ */
+        .tree-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--overlay-bg);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            z-index: 2000;
+            animation: overlayIn 0.28s ease;
+            transition: opacity 0.3s ease;
+        }
+        @keyframes overlayIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        .tree-modal {
+            background: var(--surface);
+            width: 100%;
+            max-width: 520px;
+            max-height: 78vh;
+            max-height: 78dvh;
+            border-radius: 1.6rem 1.6rem 0 0;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 -12px 50px rgba(0, 0, 0, 0.25);
+            animation: slideUpModal 0.38s cubic-bezier(0.32, 0.72, 0, 1);
+            overflow: hidden;
+        }
+        @keyframes slideUpModal {
+            from {
+                transform: translateY(100%);
+                opacity: 0.6;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        .tree-modal-handle {
+            width: 36px;
+            height: 5px;
+            background: var(--grab-handle);
+            border-radius: 10px;
+            margin: 0.55rem auto 0;
+            flex-shrink: 0;
+        }
+        .tree-modal-header {
+            padding: 0.5rem 1.1rem 0.6rem;
+            font-weight: 650;
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-primary);
+            letter-spacing: -0.15px;
+            flex-shrink: 0;
+        }
+        .tree-modal-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0.6rem 0.8rem;
+            -webkit-overflow-scrolling: touch;
+        }
+        .tree-modal-actions {
+            padding: 0.55rem 0.8rem;
+            padding-bottom: max(0.55rem, env(safe-area-inset-bottom));
+            border-top: 1px solid var(--border-light);
+            display: flex;
+            gap: 0.4rem;
+            justify-content: flex-end;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+            background: var(--surface);
+        }
+
+        /* ============ TREE NODES ============ */
+        .tree-node {
+            margin-left: 0;
+            user-select: none;
+        }
+        .tree-node .node-row {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.22rem 0.3rem;
+            padding-right: 0.15rem;
+            cursor: pointer;
+            border-radius: 0.5rem;
+            transition: background 0.15s ease;
+            flex-wrap: nowrap;
+            min-height: 2rem;
+            position: relative;
+        }
+        .tree-node .node-row:hover {
+            background: var(--surface-tertiary);
+        }
+        .tree-node .node-row:active {
+            background: var(--accent-primary-soft);
+            transition: background 0.08s ease;
+        }
+        .tree-node .toggle-icon {
+            width: 1.1rem;
+            font-size: 0.65rem;
+            color: var(--text-tertiary);
+            flex-shrink: 0;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        .tree-node .toggle-icon:hover {
+            color: var(--text-primary);
+        }
+        .tree-node .node-chip {
+            display: inline-block;
+            padding: 0.22rem 0.55rem;
+            border-radius: 0.45rem;
+            font-size: 0.73rem;
+            font-weight: 550;
+            transition: all 0.15s ease;
+            cursor: pointer;
+            white-space: nowrap;
+            color: var(--text-primary);
+            letter-spacing: -0.08px;
+            flex-shrink: 0;
+            max-width: 160px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .node-chip.type-object {
+            background: var(--color-object-bg);
+            border: 1px solid var(--color-object);
+        }
+        .node-chip.type-array {
+            background: var(--color-array-bg);
+            border: 1px solid var(--color-array);
+        }
+        .node-chip.type-string {
+            background: var(--color-string-bg);
+            border: 1px solid var(--color-string);
+        }
+        .node-chip.type-number {
+            background: var(--color-number-bg);
+            border: 1px solid var(--color-number);
+        }
+        .node-chip.type-boolean {
+            background: var(--color-boolean-bg);
+            border: 1px solid var(--color-boolean);
+        }
+        .node-chip.type-key {
+            background: var(--color-key-bg);
+            border: 1px solid var(--color-key);
+            font-weight: 580;
+        }
+        .node-chip.highlight {
+            background: var(--highlight-bg) !important;
+            color: var(--highlight-text) !important;
+            font-weight: 700 !important;
+            border-color: transparent !important;
+            box-shadow: 0 0 0 3px rgba(212, 168, 83, 0.35);
+        }
+        .node-chip:hover {
+            filter: brightness(0.94);
+            transform: scale(1.03);
+        }
+        .node-chip:active {
+            transform: scale(0.95);
+            transition: transform 0.08s ease;
+        }
+
+        /* Add button on tree node rows */
+        .node-add-btn {
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 50%;
+            background: var(--surface);
+            border: 1.2px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            flex-shrink: 0;
+            opacity: 0;
+            transform: scale(0.7);
+            transition: all var(--transition-fast);
+            color: var(--accent-primary);
+            font-size: 0.7rem;
+            margin-left: auto;
+            box-shadow: var(--shadow-sm);
+        }
+        .node-row:hover .node-add-btn,
+        .node-row:active .node-add-btn {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .node-add-btn:hover {
+            background: var(--accent-primary);
+            color: #fff;
+            border-color: var(--accent-primary);
+            box-shadow: var(--shadow-md);
+            transform: scale(1.1) !important;
+        }
+        .node-add-btn:active {
+            transform: scale(0.85) !important;
+            transition: transform 0.08s ease;
+        }
+
+        /* Add sibling button at end of children */
+        .add-sibling-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.2rem;
+            padding: 0.25rem 0.55rem;
+            margin: 0.2rem 0 0.2rem 1.4rem;
+            border-radius: var(--radius-full);
+            font-size: 0.7rem;
+            cursor: pointer;
+            color: var(--text-tertiary);
+            border: 1px dashed var(--border);
+            background: transparent;
+            transition: all var(--transition-fast);
+            font-weight: 500;
+            letter-spacing: -0.05px;
+        }
+        .add-sibling-btn:hover {
+            color: var(--accent-primary);
+            border-color: var(--accent-primary);
+            background: var(--accent-primary-soft);
+        }
+        .add-sibling-btn:active {
+            transform: scale(0.94);
+        }
+
+        .tree-children {
+            margin-left: 1.3rem;
+            border-left: 1.5px dashed var(--border);
+            padding-left: 0.45rem;
+            transition: border-color 0.35s ease;
+        }
+        .tree-children.collapsed {
+            display: none;
+        }
+
+        /* ============ TYPING INDICATOR ============ */
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            padding: 8px 10px;
+            align-items: center;
+        }
+        .dot {
+            width: 6px;
+            height: 6px;
+            background: var(--accent-primary);
+            border-radius: 50%;
+            animation: bounce 1.4s infinite ease-in-out;
+            opacity: 0.7;
+        }
+        .dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        @keyframes bounce {
+            0%,
+            80%,
+            100% {
+                transform: scale(0.4);
+                opacity: 0.4;
+            }
+            40% {
+                transform: scale(1);
+                opacity: 0.9;
+            }
+        }
+
+        /* ============ MODAL IMPORT ============ */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--overlay-bg);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3000;
+            animation: overlayIn 0.25s ease;
+        }
+        .modal-card {
+            background: var(--surface);
+            border-radius: var(--radius-xl);
+            padding: 1.5rem 1.3rem;
+            max-width: 460px;
+            width: 88%;
+            text-align: center;
+            box-shadow: var(--shadow-xl);
+            color: var(--text-primary);
+            animation: modalPop 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        @keyframes modalPop {
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        .modal-card h3 {
+            margin-bottom: 0.5rem;
+            font-weight: 680;
+            letter-spacing: -0.2px;
+            font-size: 1.05rem;
+        }
+        .modal-card textarea {
+            background: var(--input-bg);
+            color: var(--text-primary);
+            border: 1.5px solid var(--input-border);
+            border-radius: var(--radius-md);
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            resize: vertical;
+            transition: all var(--transition-fast);
+            width: 100%;
+            height: 140px;
+            margin: 0.6rem 0;
+            padding: 0.7rem;
+            outline: none;
+        }
+        .modal-card textarea:focus {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px var(--input-focus-ring);
+        }
+        .modal-card textarea::placeholder {
+            color: var(--text-tertiary);
+        }
+        .btn-row {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 0.55rem 1.3rem;
+            border-radius: var(--radius-full);
+            font-weight: 600;
+            font-size: 0.82rem;
+            cursor: pointer;
+            border: none;
+            transition: all var(--transition-fast);
+            letter-spacing: -0.1px;
+            font-family: var(--font-stack);
+        }
+        .btn-ghost {
+            background: var(--surface-secondary);
+            color: var(--text-primary);
+            border: 1.2px solid var(--border);
+        }
+        .btn-ghost:hover {
+            background: var(--surface-tertiary);
+            border-color: var(--text-tertiary);
+        }
+        .btn-primary {
+            background: var(--accent-primary);
+            color: #fff;
+            box-shadow: 0 3px 10px rgba(125, 157, 111, 0.35);
+        }
+        .btn-primary:hover {
+            background: var(--accent-primary-hover);
+            box-shadow: 0 5px 16px rgba(125, 157, 111, 0.45);
+            transform: translateY(-1px);
+        }
+        .btn:active {
+            transform: scale(0.95);
+            transition: transform 0.1s ease;
+        }
+
+        /* ============ TOAST ============ */
+        .toast {
+            position: fixed;
+            bottom: 90px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--toast-bg);
+            color: var(--toast-text);
+            padding: 0.5rem 1.3rem;
+            border-radius: var(--radius-full);
+            font-size: 0.78rem;
+            font-weight: 550;
+            z-index: 4000;
+            animation: toastIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            letter-spacing: -0.08px;
+            box-shadow: var(--shadow-lg);
+            pointer-events: none;
+        }
+        @keyframes toastIn {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* ============ RESPONSIVE FINE-TUNING ============ */
+        @media (max-width: 380px) {
+            .header {
+                padding: 0.5rem 0.6rem;
+            }
+            .header-logo {
+                font-size: 1rem;
+                gap: 0.3rem;
+            }
+            .icon-btn {
+                width: 2rem;
+                height: 2rem;
+                font-size: 1rem;
+            }
+            .chat-container {
+                padding: 0.5rem 0.5rem 0.3rem;
+                gap: 0.5rem;
+            }
+            .bubble {
+                font-size: 0.8rem;
+                padding: 0.5rem 0.7rem;
+            }
+            .input-area {
+                padding: 0.45rem 0.5rem;
+            }
+            .input-area input {
+                font-size: 0.8rem;
+                padding: 0.5rem 0.9rem;
+            }
+            .send-btn {
+                width: 2.3rem;
+                height: 2.3rem;
+                font-size: 1rem;
+            }
+            .chip {
+                font-size: 0.7rem;
+                padding: 0.3rem 0.65rem;
+            }
+        }
+    </style>
+</head>
+<body data-theme="light">
+    <div class="app">
+        <!-- ============ HEADER ============ -->
+        <div class="header">
+            <div class="header-logo">
+                <span class="logo-icon">🧩</span> DataBestie
+                <small>BFF</small>
+            </div>
+            <div class="header-actions">
+                <button class="icon-btn" id="themeToggle" title="Ganti Tema" aria-label="Toggle theme">
+                    <i class="ph ph-moon"></i>
+                </button>
+                <button class="icon-btn" id="importBtn" title="Impor JSON" aria-label="Import JSON">
+                    <i class="ph ph-upload-simple"></i>
+                </button>
+                <button class="icon-btn" id="treeViewBtn" title="Lihat Pohon Data" aria-label="Tree view">
+                    <i class="ph ph-tree-structure"></i>
+                </button>
+                <button class="icon-btn" id="resetBtn" title="Mulai Ulang" aria-label="Reset">
+                    <i class="ph ph-arrow-counter-clockwise"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- ============ CHAT AREA ============ -->
+        <div class="chat-container" id="chatContainer"></div>
+
+        <!-- ============ INPUT AREA ============ -->
+        <div class="input-area">
+            <input type="text" id="userInput" placeholder="Ketik atau pilih tombol…" autocomplete="off">
+            <button class="send-btn" id="sendBtn" aria-label="Kirim">
+                <i class="ph ph-paper-plane-right"></i>
+            </button>
+        </div>
+
+        <!-- ============ TREE PANEL — DESKTOP ============ -->
+        <div class="tree-panel" id="treePanel">
+            <div class="tree-panel-header">
+                <span><i class="ph ph-tree-structure"></i>&nbsp;Pohon Data</span>
+            </div>
+            <div class="search-box">
+                <input type="text" id="treeSearchPanel" placeholder="Cari di pohon data…" autocomplete="off">
+            </div>
+            <div class="tree-panel-body" id="treePanelBody"></div>
+            <div class="tree-panel-actions">
+                <button class="drawer-btn" id="collapseAllTree"><i class="ph ph-folder-simple"></i> Ringkas</button>
+                <button class="drawer-btn" id="downloadJson"><i class="ph ph-download-simple"></i> Simpan .json</button>
+                <button class="drawer-btn primary" id="copyJsonFromTree"><i class="ph ph-copy"></i> Salin</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ MODAL IMPORT JSON ============ -->
+    <div class="modal-overlay hidden" id="importModal">
+        <div class="modal-card">
+            <h3><i class="ph ph-upload-simple"></i>&nbsp;Impor JSON</h3>
+            <textarea id="importArea" placeholder="Tempel JSON kamu di sini…"></textarea>
+            <div class="btn-row">
+                <button class="btn btn-ghost" id="cancelImport">Batal</button>
+                <button class="btn btn-primary" id="confirmImport">Proses</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ MOBILE TREE MODAL (BOTTOM SHEET) ============ -->
+    <div class="tree-modal-overlay hidden" id="treeModalOverlay">
+        <div class="tree-modal">
+            <div class="tree-modal-handle"></div>
+            <div class="tree-modal-header">
+                <span><i class="ph ph-tree-structure"></i>&nbsp;Pohon Data</span>
+                <button class="icon-btn" id="closeTreeModal" aria-label="Tutup">
+                    <i class="ph ph-x"></i>
+                </button>
+            </div>
+            <div class="search-box">
+                <input type="text" id="treeSearchModal" placeholder="Cari di pohon data…" autocomplete="off">
+            </div>
+            <div class="tree-modal-body" id="treeModalBody"></div>
+            <div class="tree-modal-actions">
+                <button class="drawer-btn" id="collapseAllModal"><i class="ph ph-folder-simple"></i> Ringkas</button>
+                <button class="drawer-btn" id="downloadJsonModal"><i class="ph ph-download-simple"></i> Simpan</button>
+                <button class="drawer-btn primary" id="copyJsonFromModal"><i class="ph ph-copy"></i> Salin</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ TOAST ============ -->
+    <div id="toast" class="toast hidden"></div>
+
+    <script>
+        (function() {
+            // ==================== STATE ====================
+            const rootNode = { type: 'object', properties: {} };
+            let rootName = 'Data Utama';
+            let currentPath = [];
+            let wizardStep = 'init';
+            let pendingKey = null;
+            let pendingType = null;
+            let lastSimpleProp = null;
+            let editingTargetPath = null;
+            let treeSearchTerm = '';
+            const messages = [];
+
+            // ==================== DOM REFS ====================
+            const chatContainer = document.getElementById('chatContainer');
+            const userInput = document.getElementById('userInput');
+            const sendBtn = document.getElementById('sendBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const treeViewBtn = document.getElementById('treeViewBtn');
+            const treePanel = document.getElementById('treePanel');
+            const treePanelBody = document.getElementById('treePanelBody');
+            const treeModalOverlay = document.getElementById('treeModalOverlay');
+            const treeModalBody = document.getElementById('treeModalBody');
+            const closeTreeModal = document.getElementById('closeTreeModal');
+            const copyJsonFromTree = document.getElementById('copyJsonFromTree');
+            const copyJsonFromModal = document.getElementById('copyJsonFromModal');
+            const collapseAllTree = document.getElementById('collapseAllTree');
+            const collapseAllModal = document.getElementById('collapseAllModal');
+            const toast = document.getElementById('toast');
+            const themeToggle = document.getElementById('themeToggle');
+            const importBtn = document.getElementById('importBtn');
+            const importModal = document.getElementById('importModal');
+            const confirmImport = document.getElementById('confirmImport');
+            const cancelImport = document.getElementById('cancelImport');
+            const importArea = document.getElementById('importArea');
+            const downloadJsonBtn = document.getElementById('downloadJson');
+            const downloadJsonModalBtn = document.getElementById('downloadJsonModal');
+            const treeSearchPanel = document.getElementById('treeSearchPanel');
+            const treeSearchModal = document.getElementById('treeSearchModal');
+
+            // ==================== UTILS ====================
+            function getNodeByPath(path) {
+                let node = rootNode;
+                for (const key of path) {
+                    if (node.type === 'object') node = node.properties[key];
+                    else if (node.type === 'array') node = node.items[key];
+                    if (!node) throw new Error('Invalid path: ' + path.join('/'));
+                }
+                return node;
+            }
+
+            function getParentAndKey(path) {
+                if (path.length === 0) return { parent: null, key: null, parentPath: [] };
+                const parentPath = path.slice(0, -1);
+                const key = path[path.length - 1];
+                const parent = getNodeByPath(parentPath);
+                return { parent, key, parentPath };
+            }
+
+            function deleteNodeByPath(path) {
+                if (path.length === 0) return;
+                const { parent, key } = getParentAndKey(path);
+                if (parent.type === 'object') delete parent.properties[key];
+                else if (parent.type === 'array') parent.items.splice(key, 1);
+                if (currentPath.length >= path.length) {
+                    let match = true;
+                    for (let i = 0; i < path.length; i++) {
+                        if (currentPath[i] !== path[i]) { match = false; break; }
+                    }
+                    if (match) currentPath = path.slice(0, -1);
+                }
+            }
+
+            function duplicateNode(path) {
+                const node = getNodeByPath(path);
+                const copy = JSON.parse(JSON.stringify(node));
+                const { parent, key } = getParentAndKey(path);
+                if (parent.type === 'object') {
+                    let newKey = key + '_salinan';
+                    let i = 1;
+                    while (parent.properties.hasOwnProperty(newKey)) {
+                        newKey = key + '_salinan' + i;
+                        i++;
+                    }
+                    parent.properties[newKey] = copy;
+                } else if (parent.type === 'array') {
+                    parent.items.splice(Number(key) + 1, 0, copy);
+                }
+            }
+
+            function generateJSON(node) {
+                if (node.type === 'string') return String(node.value ?? '');
+                if (node.type === 'number') {
+                    const n = Number(node.value);
+                    return isNaN(n) ? 0 : n;
+                }
+                if (node.type === 'boolean') return Boolean(node.value);
+                if (node.type === 'array') return (node.items || []).map(generateJSON);
+                if (node.type === 'object') {
+                    const obj = {};
+                    for (const k in node.properties) obj[k] = generateJSON(node.properties[k]);
+                    return obj;
+                }
+                return null;
+            }
+
+            function getJSONText() {
+                try { return JSON.stringify(generateJSON(rootNode), null, 2); } catch { return '{}'; }
+            }
+
+            function updateAllPreviews() {
+                if (treePanelBody && treePanel.style.display !== 'none') renderTree(treePanelBody);
+                if (treeModalBody && !treeModalOverlay.classList.contains('hidden')) renderTree(treeModalBody);
+            }
+
+            function showToast(msg) {
+                toast.textContent = msg;
+                toast.classList.remove('hidden');
+                clearTimeout(toast._timeout);
+                toast._timeout = setTimeout(() => toast.classList.add('hidden'), 2000);
+            }
+
+            // ==================== CHAT ====================
+            function addMessage(sender, text, options = null) {
+                messages.push({ sender, text, options });
+                renderMessages();
+            }
+
+            function renderMessages() {
+                chatContainer.innerHTML = '';
+                messages.forEach((msg) => {
+                    const msgDiv = document.createElement('div');
+                    msgDiv.className = `message ${msg.sender}`;
+                    const bubble = document.createElement('div');
+                    bubble.className = 'bubble';
+                    bubble.textContent = msg.text;
+                    msgDiv.appendChild(bubble);
+                    if (msg.options && msg.options.length) {
+                        const optsDiv = document.createElement('div');
+                        optsDiv.className = 'options';
+                        msg.options.forEach(opt => {
+                            const chip = document.createElement('span');
+                            chip.className = 'chip';
+                            chip.textContent = opt.label;
+                            chip.addEventListener('click', () => processUserInput(opt.value));
+                            optsDiv.appendChild(chip);
+                        });
+                        msgDiv.appendChild(optsDiv);
+                    }
+                    chatContainer.appendChild(msgDiv);
+                });
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+
+            function showTyping() {
+                const typingDiv = document.createElement('div');
+                typingDiv.id = 'bot-typing';
+                typingDiv.className = 'message bot';
+                typingDiv.innerHTML =
+                    '<div class="bubble typing-indicator"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>';
+                chatContainer.appendChild(typingDiv);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+
+            function hideTyping() {
+                const el = document.getElementById('bot-typing');
+                if (el) el.remove();
+            }
+
+            function displayBotMessage(text, options = null) {
+                showTyping();
+                const delay = Math.min(400 + text.length * 8, 900);
+                setTimeout(() => {
+                    hideTyping();
+                    addMessage('bot', text, options);
+                }, delay);
+            }
+
+            // ==================== JSON IMPORT ====================
+            function jsonToInternalStructure(obj) {
+                if (Array.isArray(obj)) {
+                    return { type: 'array', items: obj.map(item => jsonToInternalStructure(item)) };
+                } else if (typeof obj === 'object' && obj !== null) {
+                    const properties = {};
+                    for (const key in obj) {
+                        if (obj.hasOwnProperty(key)) properties[key] = jsonToInternalStructure(obj[key]);
+                    }
+                    return { type: 'object', properties };
+                } else if (typeof obj === 'string') return { type: 'string', value: obj };
+                else if (typeof obj === 'number') return { type: 'number', value: obj };
+                else if (typeof obj === 'boolean') return { type: 'boolean', value: obj };
+                else return { type: 'string', value: String(obj) };
+            }
+
+            function importJSON(raw) {
+                try {
+                    const parsed = JSON.parse(raw);
+                    const newRoot = jsonToInternalStructure(parsed);
+                    rootNode.type = newRoot.type;
+                    if (newRoot.type === 'object') rootNode.properties = newRoot.properties || {};
+                    else if (newRoot.type === 'array') { rootNode.properties = {}; }
+                    rootName = 'Impor';
+                    currentPath = [];
+                    wizardStep = 'idle';
+                    editingTargetPath = null;
+                    updateAllPreviews();
+                    displayBotMessage('✅ JSON berhasil diimpor! Sekarang kamu bisa menjelajahi datanya.');
+                    importModal.classList.add('hidden');
+                    importArea.value = '';
+                } catch (e) {
+                    showToast('⚠️ JSON tidak valid! Periksa kembali.');
+                }
+            }
+
+            function downloadJSON() {
+                const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(getJSONText());
+                const anchor = document.createElement('a');
+                anchor.setAttribute("href", dataStr);
+                anchor.setAttribute("download", "data_susun.json");
+                document.body.appendChild(anchor);
+                anchor.click();
+                anchor.remove();
+                showToast('💾 File data_susun.json diunduh');
+            }
+
+            function copyJSONToClipboard() {
+                navigator.clipboard.writeText(getJSONText()).then(() => {
+                    showToast('✅ JSON berhasil disalin!');
+                }).catch(() => showToast('⚠️ Gagal menyalin'));
+            }
+
+            // ==================== TREE RENDERING ====================
+            function renderTree(container) {
+                container.innerHTML = '';
+                const rootWrapper = document.createElement('div');
+                rootWrapper.className = 'tree-node';
+                rootWrapper.appendChild(buildTreeNodeDOM([], rootName, rootNode, true));
+                container.appendChild(rootWrapper);
+            }
+
+            function buildTreeNodeDOM(path, keyName, node, expanded = false) {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'tree-node';
+
+                const row = document.createElement('div');
+                row.className = 'node-row';
+
+                // Toggle icon
+                const toggle = document.createElement('span');
+                toggle.className = 'toggle-icon';
+                const hasChildren = (node.type === 'object' && Object.keys(node.properties || {}).length > 0) ||
+                    (node.type === 'array' && (node.items || []).length > 0);
+                if (hasChildren) {
+                    toggle.innerHTML = expanded ? '<i class="ph ph-caret-down"></i>' : '<i class="ph ph-caret-right"></i>';
+                    toggle.style.cursor = 'pointer';
+                } else {
+                    toggle.innerHTML = '<i class="ph ph-dot" style="font-size:0.5rem;"></i>';
+                    toggle.style.opacity = '0.4';
+                }
+                row.appendChild(toggle);
+
+                // Key chip
+                if (path.length > 0) {
+                    const keyChip = document.createElement('span');
+                    keyChip.className = 'node-chip type-key';
+                    keyChip.textContent = keyName + ':';
+                    if (treeSearchTerm && keyName.toLowerCase().includes(treeSearchTerm)) keyChip.classList.add(
+                        'highlight');
+                    keyChip.addEventListener('click', (e) => { e.stopPropagation();
+                        navigateToNode(path); });
+                    row.appendChild(keyChip);
+                } else {
+                    const rootChip = document.createElement('span');
+                    rootChip.className = 'node-chip type-object';
+                    rootChip.textContent = '🏠 ' + rootName;
+                    if (treeSearchTerm && rootName.toLowerCase().includes(treeSearchTerm)) rootChip.classList.add(
+                        'highlight');
+                    rootChip.addEventListener('click', (e) => { e.stopPropagation();
+                        navigateToNode([]); });
+                    row.appendChild(rootChip);
+                }
+
+                // Value chip
+                let valueText = '';
+                let typeClass = '';
+                if (node.type === 'object') {
+                    valueText = `{…} (${Object.keys(node.properties || {}).length} bagian)`;
+                    typeClass = 'type-object';
+                } else if (node.type === 'array') {
+                    valueText = `[…] (${(node.items || []).length} item)`;
+                    typeClass = 'type-array';
+                } else if (node.type === 'string') {
+                    valueText = `"${node.value}"`;
+                    typeClass = 'type-string';
+                } else if (node.type === 'number') {
+                    valueText = String(node.value);
+                    typeClass = 'type-number';
+                } else if (node.type === 'boolean') {
+                    valueText = node.value ? 'benar' : 'salah';
+                    typeClass = 'type-boolean';
+                }
+
+                const valueChip = document.createElement('span');
+                valueChip.className = `node-chip ${typeClass}`;
+                valueChip.textContent = valueText;
+                if (treeSearchTerm && valueText.toLowerCase().includes(treeSearchTerm)) valueChip.classList.add(
+                    'highlight');
+                valueChip.addEventListener('click', (e) => { e.stopPropagation();
+                    navigateToNode(path); });
+                row.appendChild(valueChip);
+
+                // Add button for containers (object/array)
+                if (node.type === 'object' || node.type === 'array') {
+                    const addBtn = document.createElement('span');
+                    addBtn.className = 'node-add-btn';
+                    addBtn.innerHTML = '<i class="ph ph-plus"></i>';
+                    addBtn.title = 'Tambah isi di dalam sini';
+                    addBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        addChildToNode(path);
+                    });
+                    row.appendChild(addBtn);
+                }
+
+                wrapper.appendChild(row);
+
+                // Children container
+                const childrenDiv = document.createElement('div');
+                childrenDiv.className = 'tree-children';
+                if (!expanded) childrenDiv.classList.add('collapsed');
+
+                if (node.type === 'object') {
+                    const keys = Object.keys(node.properties || {});
+                    keys.forEach(k => {
+                        childrenDiv.appendChild(buildTreeNodeDOM([...path, k], k, node.properties[k], false));
+                    });
+                    // Add sibling button
+                    if (keys.length > 0) {
+                        const addSib = document.createElement('span');
+                        addSib.className = 'add-sibling-btn';
+                        addSib.innerHTML = '<i class="ph ph-plus-circle"></i> Tambah bagian';
+                        addSib.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            addChildToNode(path);
+                        });
+                        childrenDiv.appendChild(addSib);
+                    }
+                } else if (node.type === 'array') {
+                    (node.items || []).forEach((item, idx) => {
+                        childrenDiv.appendChild(buildTreeNodeDOM([...path, idx], `[${idx}]`, item, false));
+                    });
+                    if ((node.items || []).length > 0) {
+                        const addSib = document.createElement('span');
+                        addSib.className = 'add-sibling-btn';
+                        addSib.innerHTML = '<i class="ph ph-plus-circle"></i> Tambah item';
+                        addSib.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            addChildToNode(path);
+                        });
+                        childrenDiv.appendChild(addSib);
+                    }
+                }
+
+                wrapper.appendChild(childrenDiv);
+
+                // Toggle click
+                if (hasChildren) {
+                    toggle.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        childrenDiv.classList.toggle('collapsed');
+                        toggle.innerHTML = childrenDiv.classList.contains('collapsed') ?
+                            '<i class="ph ph-caret-right"></i>' :
+                            '<i class="ph ph-caret-down"></i>';
+                    });
+                }
+
+                return wrapper;
+            }
+
+            function addChildToNode(path) {
+                const node = getNodeByPath(path);
+                currentPath = [...path];
+                editingTargetPath = null;
+                const isRoot = path.length === 0;
+                const nodeName = isRoot ? rootName : (path[path.length - 1]);
+
+                if (node.type === 'object') {
+                    wizardStep = 'building_object';
+                    displayBotMessage(
+                        `➕ Tambah bagian baru di dalam **${nodeName}**. Silakan ketik nama bagiannya:`
+                        );
+                } else if (node.type === 'array') {
+                    wizardStep = 'building_array';
+                    displayBotMessage(`➕ Tambah item ke daftar **${nodeName}**. Pilih jenis isinya:`, [
+                        { label: '🔤 Teks', value: 'teks' },
+                        { label: '🔢 Angka', value: 'angka' },
+                        { label: '🔘 Ya/Tidak', value: 'boolean' },
+                        { label: '📁 Grup Data', value: 'object' },
+                    ]);
+                }
+                updateAllPreviews();
+                if (window.innerWidth < 768) treeModalOverlay.classList.add('hidden');
+            }
+
+            function collapseAllInContainer(container) {
+                container.querySelectorAll('.tree-children').forEach(c => c.classList.add('collapsed'));
+                container.querySelectorAll('.toggle-icon').forEach(t => {
+                    t.innerHTML = '<i class="ph ph-caret-right"></i>';
+                });
+            }
+
+            // ==================== NAVIGASI DARI POHON ====================
+            function navigateToNode(path) {
+                if (window.innerWidth < 768) treeModalOverlay.classList.add('hidden');
+                const node = getNodeByPath(path);
+                currentPath = [...path];
+                editingTargetPath = [...path];
+                wizardStep = 'editing_node';
+
+                const { key } = getParentAndKey(path);
+                const isRoot = path.length === 0;
+                let locationDesc = isRoot ? `data utama **${rootName}**` : `bagian **${key}**`;
+                const typeNames = { 'object': 'Grup Data', 'array': 'Daftar', 'string': 'Teks', 'number': 'Angka',
+                    'boolean': 'Ya/Tidak' };
+                const typeName = typeNames[node.type] || node.type;
+
+                displayBotMessage(`📍 Kamu sekarang di **${locationDesc}** (${typeName}). Apa yang ingin kamu lakukan?`);
+
+                const options = [];
+                if (!isRoot) {
+                    options.push({ label: '✏️ Ubah Nama', value: 'ubah_nama' });
+                    options.push({ label: '🔄 Ubah Jenis', value: 'ubah_jenis' });
+                }
+                if (node.type === 'object' || node.type === 'array') {
+                    options.push({ label: '➕ Tambah Isi', value: 'tambah_isi' });
+                } else {
+                    options.push({ label: '✏️ Ubah Nilai', value: 'ubah_nilai' });
+                }
+                if (!isRoot) {
+                    options.push({ label: '📋 Duplikat', value: 'duplikat' });
+                    options.push({ label: '🗑️ Hapus', value: 'hapus' });
+                }
+                options.push({ label: '📂 Lihat Pohon', value: 'lihat_pohon' });
+                options.push({ label: '↩️ Kembali ke Atas', value: 'kembali_atas' });
+                addMessage('bot', 'Pilih aksi:', options);
+            }
+
+            // ==================== PROSES INPUT ====================
+            function processUserInput(raw) {
+                const input = raw.trim();
+                if (!input) return;
+                const lower = input.toLowerCase();
+
+                // Global commands
+                if (lower === 'mulai ulang' || lower === 'reset') { resetAll(); return; }
+                if (lower === 'lihat pohon' || lower === 'pohon') { openTreeView(); return; }
+                if (lower === 'bantuan' || lower === 'help') {
+                    displayBotMessage(
+                        '📘 Kamu bisa mengetik langsung, klik tombol, atau klik chip di pohon data. Gunakan "lihat pohon" untuk navigasi visual.'
+                        );
+                    return;
+                }
+                if ((lower === 'kembali' || lower === 'kembali_atas') && (wizardStep === 'editing_node' || currentPath
+                        .length > 0)) {
+                    goToParentContext();
+                    return;
+                }
+
+                // Renaming / changing type states
+                if (wizardStep === 'renaming_root' || wizardStep === 'renaming_key') {
+                    addMessage('user', input);
+                    userInput.value = '';
+                    handleRenaming(input);
+                    return;
+                }
+                if (wizardStep === 'changing_type') {
+                    addMessage('user', input);
+                    userInput.value = '';
+                    handleChangingType(input);
+                    return;
+                }
+
+                addMessage('user', input);
+                userInput.value = '';
+
+                if (wizardStep === 'editing_node') { handleEditingCommand(lower); return; }
+
+                switch (wizardStep) {
+                    case 'init':
+                        handleInit(input);
+                        break;
+                    case 'building_object':
+                        handleBuildingObject(input);
+                        break;
+                    case 'choosing_type':
+                        handleChoosingType(input);
+                        break;
+                    case 'entering_value':
+                        handleEnteringValue(input);
+                        break;
+                    case 'building_array':
+                        handleBuildingArray(input);
+                        break;
+                    case 'choosing_item_type':
+                        handleChoosingItemType(input);
+                        break;
+                    case 'entering_item_value':
+                        handleEnteringItemValue(input);
+                        break;
+                    case 'idle':
+                        wizardStep = 'building_object';
+                        handleBuildingObject(input);
+                        break;
+                    default:
+                        displayBotMessage('Hmm, aku bingung. Ketik "mulai ulang" saja ya 🙏');
+                }
+            }
+
+            function handleEditingCommand(cmd) {
+                if (!editingTargetPath) {
+                    displayBotMessage('Tidak ada yang dipilih. Klik chip di pohon data dulu.');
+                    wizardStep = 'idle';
+                    return;
+                }
+                const path = editingTargetPath;
+                const node = getNodeByPath(path);
+                const { parent, key } = getParentAndKey(path);
+                const isRoot = path.length === 0;
+
+                switch (cmd) {
+                    case 'ubah_nama':
+                        if (isRoot) {
+                            displayBotMessage('Ketik nama baru untuk data utama:');
+                            wizardStep = 'renaming_root';
+                        } else {
+                            displayBotMessage(`Nama saat ini: **${key}**. Ketik nama baru:`);
+                            wizardStep = 'renaming_key';
+                        }
+                        break;
+                    case 'ubah_jenis':
+                        if (isRoot) {
+                            displayBotMessage('Data utama hanya bisa berupa Grup Data (Object).');
+                            wizardStep = 'editing_node';
+                        } else {
+                            displayBotMessage(`Pilih jenis baru untuk **${key}**:`, [
+                                { label: '🔤 Teks', value: 'jenis_teks' },
+                                { label: '🔢 Angka', value: 'jenis_angka' },
+                                { label: '🔘 Ya/Tidak', value: 'jenis_boolean' },
+                                { label: '📋 Daftar', value: 'jenis_array' },
+                                { label: '📁 Grup Data', value: 'jenis_object' },
+                            ]);
+                            wizardStep = 'changing_type';
+                        }
+                        break;
+                    case 'tambah_isi':
+                        currentPath = [...path];
+                        editingTargetPath = null;
+                        if (node.type === 'object') {
+                            wizardStep = 'building_object';
+                            displayBotMessage(
+                                `Tambah bagian baru di dalam **${isRoot ? rootName : key}**. Ketik nama bagian:`);
+                        } else if (node.type === 'array') {
+                            wizardStep = 'building_array';
+                            displayBotMessage(`Tambah item ke daftar **${key}**. Pilih jenisnya:`, [
+                                { label: '🔤 Teks', value: 'teks' },
+                                { label: '🔢 Angka', value: 'angka' },
+                                { label: '🔘 Ya/Tidak', value: 'boolean' },
+                                { label: '📁 Grup Data', value: 'object' },
+                            ]);
+                        }
+                        break;
+                    case 'ubah_nilai':
+                        if (node.type === 'string' || node.type === 'number' || node.type === 'boolean') {
+                            lastSimpleProp = key;
+                            currentPath = [...getParentAndKey(path).parentPath];
+                            wizardStep = 'entering_value';
+                            editingTargetPath = null;
+                            if (node.type === 'boolean') {
+                                displayBotMessage(
+                                    `Nilai saat ini: **${node.value ? 'benar' : 'salah'}**. Pilih nilai baru:`, [
+                                        { label: '✅ Benar', value: 'benar' },
+                                        { label: '❌ Salah', value: 'salah' },
+                                    ]);
+                            } else {
+                                displayBotMessage(`Nilai saat ini: **${node.value}**. Ketik nilai baru:`);
+                            }
+                        } else {
+                            displayBotMessage('Bagian ini bukan nilai sederhana, tidak bisa langsung ubah nilai.');
+                            wizardStep = 'editing_node';
+                        }
+                        break;
+                    case 'duplikat':
+                        if (!isRoot) {
+                            duplicateNode(path);
+                            displayBotMessage(`✅ **${key}** berhasil diduplikasi. Lihat pohon untuk melihat hasilnya.`);
+                            updateAllPreviews();
+                        }
+                        wizardStep = 'editing_node';
+                        editingTargetPath = [...path];
+                        break;
+                    case 'hapus':
+                        if (!isRoot) {
+                            const name = key;
+                            deleteNodeByPath(path);
+                            displayBotMessage(`🗑️ **${name}** berhasil dihapus.`);
+                            updateAllPreviews();
+                            editingTargetPath = null;
+                            currentPath = getParentAndKey(path).parentPath;
+                            wizardStep = 'idle';
+                        } else {
+                            displayBotMessage('Data utama tidak bisa dihapus. Mau mulai ulang? Ketik "reset".');
+                            wizardStep = 'editing_node';
+                        }
+                        break;
+                    case 'lihat_pohon':
+                        openTreeView();
+                        wizardStep = 'editing_node';
+                        break;
+                    default:
+                        displayBotMessage('Pilih aksi dari tombol yang tersedia ya.');
+                        wizardStep = 'editing_node';
+                }
+            }
+
+            function handleRenaming(input) {
+                if (wizardStep === 'renaming_root') {
+                    rootName = input;
+                    displayBotMessage(`✅ Nama data utama diubah menjadi **${rootName}**.`);
+                } else if (wizardStep === 'renaming_key') {
+                    const { parent, key } = getParentAndKey(editingTargetPath);
+                    if (parent.type === 'object' && parent.properties.hasOwnProperty(input) && input !== key) {
+                        displayBotMessage(`Nama "${input}" sudah dipakai. Gunakan nama lain.`);
+                        return;
+                    }
+                    const node = parent.type === 'object' ? parent.properties[key] : parent.items[key];
+                    if (parent.type === 'object') {
+                        delete parent.properties[key];
+                        parent.properties[input] = node;
+                    }
+                    displayBotMessage(`✅ Nama diubah dari **${key}** menjadi **${input}**.`);
+                }
+                wizardStep = 'editing_node';
+                updateAllPreviews();
+            }
+
+            function handleChangingType(input) {
+                const { parent, key } = getParentAndKey(editingTargetPath);
+                const typeMap = { 'jenis_teks': 'string', 'jenis_angka': 'number', 'jenis_boolean': 'boolean',
+                    'jenis_array': 'array', 'jenis_object': 'object' };
+                const newType = typeMap[input];
+                if (!newType) { displayBotMessage('Pilih jenis dari tombol ya.'); return; }
+                let newNode;
+                if (newType === 'string') newNode = { type: 'string', value: '' };
+                else if (newType === 'number') newNode = { type: 'number', value: 0 };
+                else if (newType === 'boolean') newNode = { type: 'boolean', value: true };
+                else if (newType === 'array') newNode = { type: 'array', items: [] };
+                else if (newType === 'object') newNode = { type: 'object', properties: {} };
+                if (parent.type === 'object') parent.properties[key] = newNode;
+                else parent.items[key] = newNode;
+                displayBotMessage(`✅ Jenis **${key}** diubah menjadi ${newType}.`);
+                wizardStep = 'editing_node';
+                updateAllPreviews();
+                navigateToNode(editingTargetPath);
+            }
+
+            // ==================== WIZARD FLOW ====================
+            function handleInit(name) {
+                rootName = name || 'DataKu';
+                rootNode.properties = {};
+                currentPath = [];
+                wizardStep = 'building_object';
+                displayBotMessage(
+                    `Oke, kita buat **${rootName}**. Tambahkan bagian pertama. Ketik nama bagian, atau "selesai" kalau sudah.`);
+            }
+
+            function handleBuildingObject(input) {
+                const currentObj = getNodeByPath(currentPath);
+                if (input.toLowerCase() === 'selesai') {
+                    if (currentPath.length === 0) {
+                        wizardStep = 'idle';
+                        displayBotMessage(
+                            `🎉 Data **${rootName}** selesai! Kamu bisa lihat pohon data atau tambah lagi.`, [
+                                { label: '🌳 Lihat Pohon', value: 'lihat_pohon' },
+                                { label: '➕ Tambah Bagian', value: 'tambah' },
+                            ]);
+                    } else { goToParentContext(); }
+                    return;
+                }
+                if (currentObj.properties && currentObj.properties.hasOwnProperty(input)) {
+                    displayBotMessage(`Bagian "${input}" sudah ada, pakai nama lain ya.`);
+                    return;
+                }
+                pendingKey = input;
+                wizardStep = 'choosing_type';
+                displayBotMessage(`Bagian **${input}** akan diisi apa?`, [
+                    { label: '🔤 Teks', value: 'teks' },
+                    { label: '🔢 Angka', value: 'angka' },
+                    { label: '🔘 Ya/Tidak', value: 'boolean' },
+                    { label: '📋 Daftar', value: 'array' },
+                    { label: '📁 Grup Data', value: 'object' },
+                ]);
+            }
+
+            function handleChoosingType(input) {
+                const typeMap = { 'teks': 'string', 'angka': 'number', 'boolean': 'boolean', 'array': 'array',
+                    'object': 'object' };
+                const type = typeMap[input.toLowerCase()];
+                if (!type) { displayBotMessage('Pilih jenisnya dengan klik tombol ya.'); return; }
+                const currentObj = getNodeByPath(currentPath);
+                let newNode;
+                if (type === 'string') newNode = { type: 'string', value: '' };
+                else if (type === 'number') newNode = { type: 'number', value: 0 };
+                else if (type === 'boolean') newNode = { type: 'boolean', value: true };
+                else if (type === 'array') newNode = { type: 'array', items: [] };
+                else if (type === 'object') newNode = { type: 'object', properties: {} };
+                currentObj.properties[pendingKey] = newNode;
+                if (type === 'array') {
+                    currentPath.push(pendingKey);
+                    wizardStep = 'building_array';
+                    displayBotMessage(`Daftar **${pendingKey}** siap diisi. Pilih jenis isinya:`, [
+                        { label: '🔤 Teks', value: 'teks' }, { label: '🔢 Angka', value: 'angka' },
+                        { label: '🔘 Ya/Tidak', value: 'boolean' }, { label: '📁 Grup Data', value: 'object' },
+                        { label: '✅ Selesai', value: 'selesai' },
+                    ]);
+                } else if (type === 'object') {
+                    currentPath.push(pendingKey);
+                    wizardStep = 'building_object';
+                    displayBotMessage(`Grup **${pendingKey}** dibuat. Tambahkan bagian di dalamnya.`);
+                } else {
+                    lastSimpleProp = pendingKey;
+                    wizardStep = 'entering_value';
+                    if (type === 'boolean') {
+                        displayBotMessage(`Nilai untuk **${pendingKey}**:`, [
+                            { label: '✅ Benar', value: 'benar' }, { label: '❌ Salah', value: 'salah' },
+                        ]);
+                    } else {
+                        displayBotMessage(`Masukkan nilai untuk **${pendingKey}**:`);
+                    }
+                }
+                pendingKey = null;
+                updateAllPreviews();
+            }
+
+            function handleEnteringValue(input) {
+                if (!lastSimpleProp) { displayBotMessage('Ada kesalahan kecil, mulai ulang yuk.'); return; }
+                const currentObj = getNodeByPath(currentPath);
+                const node = currentObj.properties[lastSimpleProp];
+                if (!node) return;
+                if (node.type === 'string') node.value = input;
+                else if (node.type === 'number') {
+                    const num = Number(input);
+                    if (isNaN(num)) { displayBotMessage('Harap masukkan angka yang benar.'); return; }
+                    node.value = num;
+                } else if (node.type === 'boolean') {
+                    const low = input.toLowerCase();
+                    if (low === 'benar' || low === 'true' || low === 'ya') node.value = true;
+                    else if (low === 'salah' || low === 'false' || low === 'tidak') node.value = false;
+                    else { displayBotMessage('Ketik "benar" atau "salah".'); return; }
+                }
+                lastSimpleProp = null;
+                wizardStep = 'building_object';
+                displayBotMessage('✅ Tersimpan. Tambah bagian lain? (nama atau "selesai")');
+                updateAllPreviews();
+            }
+
+            function handleBuildingArray(input) {
+                if (input.toLowerCase() === 'selesai') { goToParentContext(); return; }
+                wizardStep = 'choosing_item_type';
+                processUserInput(input);
+            }
+
+            function handleChoosingItemType(input) {
+                const typeMap = { 'teks': 'string', 'angka': 'number', 'boolean': 'boolean', 'object': 'object' };
+                const type = typeMap[input.toLowerCase()];
+                if (!type) { displayBotMessage('Pilih jenis isi daftar atau "selesai".'); return; }
+                if (type === 'object') {
+                    const newObj = { type: 'object', properties: {} };
+                    getNodeByPath(currentPath).items.push(newObj);
+                    currentPath.push(getNodeByPath(currentPath).items.length - 1);
+                    wizardStep = 'building_object';
+                    displayBotMessage('Grup data baru masuk daftar. Tambahkan bagian di dalamnya.');
+                } else {
+                    pendingType = type;
+                    wizardStep = 'entering_item_value';
+                    if (type === 'boolean') {
+                        displayBotMessage('Pilih nilai:', [
+                            { label: '✅ Benar', value: 'benar' }, { label: '❌ Salah', value: 'salah' },
+                        ]);
+                    } else { displayBotMessage(`Masukkan nilai ${type}:`); }
+                }
+                updateAllPreviews();
+            }
+
+            function handleEnteringItemValue(input) {
+                const arr = getNodeByPath(currentPath);
+                let newNode;
+                if (pendingType === 'string') newNode = { type: 'string', value: input };
+                else if (pendingType === 'number') {
+                    const num = Number(input);
+                    if (isNaN(num)) { displayBotMessage('Angka saja ya.'); return; }
+                    newNode = { type: 'number', value: num };
+                } else if (pendingType === 'boolean') {
+                    const low = input.toLowerCase();
+                    if (low === 'benar' || low === 'true' || low === 'ya') newNode = { type: 'boolean', value: true };
+                    else if (low === 'salah' || low === 'false' || low === 'tidak') newNode = { type: 'boolean',
+                        value: false };
+                    else { displayBotMessage('Ketik "benar" atau "salah".'); return; }
+                }
+                arr.items.push(newNode);
+                pendingType = null;
+                wizardStep = 'building_array';
+                displayBotMessage('✅ Masuk daftar. Tambah lagi? (pilih jenis atau "selesai")', [
+                    { label: '🔤 Teks', value: 'teks' }, { label: '🔢 Angka', value: 'angka' },
+                    { label: '🔘 Ya/Tidak', value: 'boolean' }, { label: '📁 Grup Data', value: 'object' },
+                    { label: '✅ Selesai', value: 'selesai' },
+                ]);
+                updateAllPreviews();
+            }
+
+            function goToParentContext() {
+                editingTargetPath = null;
+                if (currentPath.length === 0) {
+                    wizardStep = 'idle';
+                    displayBotMessage('Kembali ke data utama. Mau tambah bagian lagi?');
+                    return;
+                }
+                currentPath.pop();
+                const parent = getNodeByPath(currentPath);
+                if (parent.type === 'object') {
+                    wizardStep = 'building_object';
+                    displayBotMessage('Kembali ke grup sebelumnya. Tambah bagian atau "selesai".');
+                } else if (parent.type === 'array') {
+                    wizardStep = 'building_array';
+                    displayBotMessage('Kembali ke daftar. Pilih jenis isi atau "selesai".', [
+                        { label: '🔤 Teks', value: 'teks' }, { label: '🔢 Angka', value: 'angka' },
+                        { label: '🔘 Ya/Tidak', value: 'boolean' }, { label: '📁 Grup Data', value: 'object' },
+                        { label: '✅ Selesai', value: 'selesai' },
+                    ]);
+                }
+            }
+
+            function resetAll() {
+                rootNode.properties = {};
+                rootNode.type = 'object';
+                rootName = 'Data Utama';
+                currentPath = [];
+                wizardStep = 'init';
+                pendingKey = null;
+                pendingType = null;
+                lastSimpleProp = null;
+                editingTargetPath = null;
+                messages.length = 0;
+                renderMessages();
+                updateAllPreviews();
+                displayBotMessage(
+                    '👋 Hai! Aku bantu kamu menyusun data dengan ngobrol santai. Mulai dari memberi nama **data utama** kamu. Contoh: "dataProfil", "daftarBuku". Mau dikasih nama apa?');
+            }
+
+            // ==================== TREE VIEW CONTROLS ====================
+            function openTreeView() {
+                updateAllPreviews();
+                if (window.innerWidth < 768) {
+                    treeModalOverlay.classList.remove('hidden');
+                    renderTree(treeModalBody);
+                    document.getElementById('treeSearchModal').value = treeSearchTerm;
+                } else {
+                    renderTree(treePanelBody);
+                    document.getElementById('treeSearchPanel').value = treeSearchTerm;
+                }
+            }
+
+            // ==================== EVENT LISTENERS ====================
+            sendBtn.addEventListener('click', () => processUserInput(userInput.value));
+            userInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') processUserInput(userInput.value); });
+            resetBtn.addEventListener('click', resetAll);
+            treeViewBtn.addEventListener('click', openTreeView);
+            closeTreeModal.addEventListener('click', () => treeModalOverlay.classList.add('hidden'));
+            treeModalOverlay.addEventListener('click', (e) => {
+                if (e.target === treeModalOverlay) treeModalOverlay.classList.add('hidden');
+            });
+            copyJsonFromTree.addEventListener('click', copyJSONToClipboard);
+            copyJsonFromModal.addEventListener('click', copyJSONToClipboard);
+            collapseAllTree.addEventListener('click', () => collapseAllInContainer(treePanelBody));
+            collapseAllModal.addEventListener('click', () => collapseAllInContainer(treeModalBody));
+
+            // Dark mode toggle
+            themeToggle.addEventListener('click', () => {
+                const isDark = document.body.getAttribute('data-theme') === 'dark';
+                document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+                const iconEl = themeToggle.querySelector('i');
+                if (iconEl) {
+                    iconEl.className = isDark ? 'ph ph-moon' : 'ph ph-sun';
+                }
+            });
+
+            // Import JSON
+            importBtn.addEventListener('click', () => importModal.classList.remove('hidden'));
+            cancelImport.addEventListener('click', () => importModal.classList.add('hidden'));
+            importModal.addEventListener('click', (e) => { if (e.target === importModal) importModal.classList.add(
+                    'hidden'); });
+            confirmImport.addEventListener('click', () => {
+                const raw = importArea.value;
+                if (!raw.trim()) { showToast('Tempel JSON dulu ya.'); return; }
+                importJSON(raw);
+            });
+
+            // Download JSON
+            downloadJsonBtn.addEventListener('click', downloadJSON);
+            downloadJsonModalBtn.addEventListener('click', downloadJSON);
+
+            // Tree search
+            function handleTreeSearch(value) {
+                treeSearchTerm = value.toLowerCase().trim();
+                updateAllPreviews();
+            }
+            treeSearchPanel.addEventListener('input', (e) => {
+                handleTreeSearch(e.target.value);
+                treeSearchModal.value = e.target.value;
+            });
+            treeSearchModal.addEventListener('input', (e) => {
+                handleTreeSearch(e.target.value);
+                treeSearchPanel.value = e.target.value;
+            });
+
+            // Keyboard shortcut for closing modals
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    treeModalOverlay.classList.add('hidden');
+                    importModal.classList.add('hidden');
+                }
+            });
+
+            // ==================== INIT ====================
+            resetAll();
+            renderTree(treePanelBody);
+
+            // Set initial theme icon
+            const initThemeIcon = themeToggle.querySelector('i');
+            if (initThemeIcon && document.body.getAttribute('data-theme') === 'dark') {
+                initThemeIcon.className = 'ph ph-sun';
+            }
+        })();
+    </script>
+</body>
+</html>
