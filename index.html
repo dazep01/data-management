@@ -3,188 +3,449 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RaaRion Data Management | Portal Ekosistem</title>
+    <title>RaaRion Data Management — Ekosistem Toolkit Data Futuristik</title>
+
+    <!-- Phosphor Icons -->
+    <link rel="stylesheet" href="https://unpkg.com/phosphor-icons@1.4.2/src/css/phosphor.css">
+
+    <!-- Google Font: Outfit (futuristic, clean) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
         :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --accent-human: #fb7185; /* Rose for DataBestie */
-            --accent-visual: #34d399; /* Emerald for PastelTree */
-            --accent-tech: #38bdf8;   /* Sky for DSLEditor */
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            /* Pastel futuristik palette */
+            --bg-base: #faf7f5;
+            --card-bg: rgba(255, 255, 255, 0.55);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --text-primary: #2d2a3a;
+            --text-secondary: #5c5a6e;
+            --text-muted: #8a879c;
+
+            /* Aksen pilar – versi pastel cerah */
+            --human-pink: #f9a8d4;
+            --human-pink-soft: #fce4f1;
+            --visual-mint: #a7f0d4;
+            --visual-mint-soft: #e0faf0;
+            --tech-blue: #a5c9ff;
+            --tech-blue-soft: #e2eeff;
+
+            /* Bayangan & radius */
+            --shadow-sm: 0 8px 20px rgba(0, 0, 0, 0.03);
+            --shadow-lg: 0 30px 50px -20px rgba(0, 0, 0, 0.12);
+            --radius-card: 2.5rem;
+            --radius-btn: 5rem;
+
+            /* Transisi */
+            --transition-smooth: 0.35s cubic-bezier(0.25, 0.1, 0.15, 1);
+            --transition-bounce: 0.45s cubic-bezier(0.25, 0.8, 0.25, 1.4);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-primary);
+            font-family: 'Outfit', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-base);
+            background-image:
+                radial-gradient(circle at 15% 30%, rgba(249, 168, 212, 0.08) 0%, transparent 45%),
+                radial-gradient(circle at 80% 70%, rgba(165, 201, 255, 0.09) 0%, transparent 50%),
+                radial-gradient(circle at 50% 10%, rgba(167, 240, 212, 0.06) 0%, transparent 40%);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 2rem;
+            padding: 2rem 1.5rem;
             overflow-x: hidden;
+            color: var(--text-primary);
+            line-height: 1.5;
         }
 
-        header {
+        /* --------------- MAIN CONTAINER --------------- */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        /* --------------- TYPOGRAPHY & HERO --------------- */
+        .hero {
             text-align: center;
             margin-bottom: 4rem;
-            max-width: 800px;
         }
 
-        header h1 {
-            font-size: 3rem;
-            letter-spacing: -1px;
-            margin-bottom: 1rem;
-            background: linear-gradient(to right, var(--accent-human), var(--accent-tech));
+        .hero h1 {
+            font-size: clamp(2.2rem, 6vw, 3.8rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            margin-bottom: 1.25rem;
+            background: linear-gradient(135deg, #f78bb6 0%, #f9a8d4 25%, #8cc7f7 55%, #a7f0d4 85%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.03));
+            animation: gradientShift 8s ease infinite alternate;
+            background-size: 200% 200%;
         }
 
-        header p {
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .hero .tagline {
+            font-size: 1.15rem;
+            font-weight: 400;
             color: var(--text-secondary);
-            font-size: 1.1rem;
-            line-height: 1.6;
+            max-width: 680px;
+            margin: 0 auto 1.8rem;
+            letter-spacing: -0.01em;
         }
 
-        .portal-container {
+        .manifesto-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            padding: 0.7rem 1.6rem;
+            border-radius: 5rem;
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition-smooth);
+        }
+
+        .manifesto-badge i {
+            font-size: 1.3rem;
+            color: #f9a8d4;
+        }
+
+        /* --------------- PHILOSOPHY STRIP --------------- */
+        .philosophy-strip {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.2rem;
+            margin-bottom: 3.5rem;
+        }
+
+        .philosophy-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 3rem;
+            padding: 0.5rem 1.3rem;
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: var(--shadow-sm);
+        }
+        .philosophy-item span {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .philosophy-item .dot-human {
+            background: var(--human-pink);
+        }
+        .philosophy-item .dot-visual {
+            background: var(--visual-mint);
+        }
+        .philosophy-item .dot-tech {
+            background: var(--tech-blue);
+        }
+
+        /* --------------- TOOLKIT GRID --------------- */
+        .toolkit-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
-            width: 100%;
-            max-width: 1100px;
+            margin-bottom: 4rem;
         }
 
-        .card {
-            background-color: var(--card-bg);
-            border-radius: 1.5rem;
-            padding: 2.5rem;
-            text-align: center;
+        /* Kartu glassmorphism */
+        .tool-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-card);
+            padding: 2.5rem 2rem 2rem;
             text-decoration: none;
             color: inherit;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: var(--transition);
             display: flex;
             flex-direction: column;
+            align-items: center;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition-bounce);
             position: relative;
             overflow: hidden;
+            isolation: isolate;
         }
 
-        .card::before {
+        /* Hiasan latar kartu */
+        .tool-card::after {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            transition: var(--transition);
+            top: -20%;
+            left: -10%;
+            width: 120%;
+            height: 120%;
+            background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.5) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
         }
 
-        /* Card Variations */
-        .card.human::before { background: var(--accent-human); }
-        .card.visual::before { background: var(--accent-visual); }
-        .card.tech::before { background: var(--accent-tech); }
-
-        .card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+        .tool-card:hover {
+            transform: translateY(-14px) scale(1.02);
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
         }
 
-        .icon {
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
-            display: block;
+        .tool-card:hover::after {
+            opacity: 1;
         }
 
-        .card h2 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
+        /* Ikon phosphor besar */
+        .card-icon {
+            font-size: 3.8rem;
+            margin-bottom: 1.4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            transition: var(--transition-bounce);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
         }
 
-        .card p {
+        .card-human .card-icon {
+            color: #e56b8a;
+            background: var(--human-pink-soft);
+        }
+        .card-visual .card-icon {
+            color: #2e8b6e;
+            background: var(--visual-mint-soft);
+        }
+        .card-tech .card-icon {
+            color: #3b6eb0;
+            background: var(--tech-blue-soft);
+        }
+
+        .tool-card:hover .card-icon {
+            transform: scale(1.08) rotate(2deg);
+        }
+
+        .tool-card h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            margin-bottom: 0.8rem;
+        }
+
+        .tool-card .desc {
             color: var(--text-secondary);
             font-size: 0.95rem;
-            line-height: 1.5;
-            margin-bottom: 2rem;
+            line-height: 1.6;
+            margin-bottom: 2.2rem;
             flex-grow: 1;
         }
 
+        /* Button pastel */
         .btn {
-            padding: 0.8rem 1.5rem;
-            border-radius: 0.75rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.85rem 1.9rem;
+            border-radius: var(--radius-btn);
             font-weight: 600;
             font-size: 0.9rem;
-            transition: var(--transition);
             border: none;
             cursor: pointer;
+            background: white;
+            color: var(--text-primary);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+            transition: var(--transition-bounce);
+            letter-spacing: -0.01em;
+            background: rgba(255,255,255,0.8);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.7);
         }
 
-        .human .btn { background: var(--accent-human); color: white; }
-        .visual .btn { background: var(--accent-visual); color: #064e3b; }
-        .tech .btn { background: var(--accent-tech); color: #082f49; }
+        .card-human .btn {
+            background: #fde8f0;
+            color: #b13e5c;
+        }
+        .card-visual .btn {
+            background: #defaef;
+            color: #1d6e4c;
+        }
+        .card-tech .btn {
+            background: #e5f0ff;
+            color: #2c5282;
+        }
 
         .btn:hover {
-            filter: brightness(1.2);
-            letter-spacing: 1px;
+            transform: scale(1.04);
+            letter-spacing: 0.02em;
+            filter: brightness(1.02);
+            box-shadow: 0 12px 22px -8px rgba(0,0,0,0.1);
         }
 
+        .btn i {
+            font-size: 1.1rem;
+            transition: transform 0.2s;
+        }
+        .btn:hover i {
+            transform: translateX(4px);
+        }
+
+        /* --------------- FOOTER --------------- */
         footer {
-            margin-top: 5rem;
-            color: var(--text-secondary);
+            margin-top: 2rem;
+            font-weight: 400;
+            color: var(--text-muted);
             font-size: 0.85rem;
-            letter-spacing: 2px;
+            letter-spacing: 0.03em;
             text-transform: uppercase;
+            text-align: center;
+            opacity: 0.8;
         }
 
+        /* --------------- RESPONSIVE TWEAKS --------------- */
         @media (max-width: 768px) {
-            header h1 { font-size: 2.2rem; }
-            .portal-container { grid-template-columns: 1fr; }
+            body {
+                padding: 1.5rem 1rem;
+            }
+            .toolkit-grid {
+                grid-template-columns: 1fr;
+                max-width: 420px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .hero h1 {
+                font-size: 2.3rem;
+            }
+            .philosophy-strip {
+                gap: 0.7rem;
+            }
+            .card-icon {
+                width: 80px;
+                height: 80px;
+                font-size: 3rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .toolkit-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
         }
     </style>
 </head>
 <body>
+    <div class="container">
+        <!-- Hero & Deskripsi -->
+        <header class="hero">
+            <h1>RaaRion Data Management</h1>
+            <p class="tagline">
+                Kumpulan prototipe alat kustom untuk manajemen data (JSON, YAML, dsb.) yang dirancang agar siapa pun — bahkan non-teknis — bisa mengolah data dengan cara paling nyaman.
+            </p>
+            <div class="manifesto-badge">
+                <i class="ph ph-stack"></i>
+                <span>Satu Manifesto, Tiga Wajah Kemudahan</span>
+            </div>
+        </header>
 
-    <header>
-        <h1>RaaRion Data Management</h1>
-        <p>Satu Manifesto, Tiga Wajah. Pilih pintu yang paling sesuai dengan caramu berinteraksi dengan data.</p>
-    </header>
+        <!-- Filosofi singkat -->
+        <div class="philosophy-strip">
+            <div class="philosophy-item">
+                <span class="dot-human"></span> Humanis
+            </div>
+            <div class="philosophy-item">
+                <span class="dot-visual"></span> Visual-Estetik
+            </div>
+            <div class="philosophy-item">
+                <span class="dot-tech"></span> Teknis-Efisiensi
+            </div>
+        </div>
 
-    <main class="portal-container">
-        <a href="app/data-bestie-chat.html" class="card human">
-            <span class="icon">💬</span>
-            <h2>Data Bestie Chat</h2>
-            <p>Pilar Humanis. Mengolah data terasa seperti mengobrol dengan teman. Solusi bagi yang menginginkan bimbingan dan empati.</p>
-            <button class="btn">Masuk Dunia Verbal</button>
-        </a>
+        <!-- Kartu Toolkit -->
+        <main class="toolkit-grid">
+            <!-- Data Bestie Chat -->
+            <a href="app/data-bestie-chat.html" class="tool-card card-human">
+                <div class="card-icon">
+                    <i class="ph ph-chats-circle"></i>
+                </div>
+                <h2>Data Bestie Chat</h2>
+                <p class="desc">
+                    <strong>Pilar Humanis.</strong> Mengolah data terasa seperti mengobrol dengan teman. Dapatkan bimbingan dan empati saat menyusun struktur — teknologi yang beradaptasi dengan bahasa manusia.
+                </p>
+                <div class="btn">
+                    Mulai Percakapan <i class="ph ph-arrow-right"></i>
+                </div>
+            </a>
 
-        <a href="app/pastel-tree-v2.html" class="card visual">
-            <span class="icon">🌳</span>
-            <h2>Pastel Tree V2</h2>
-            <p>Pilar Visual-Estetik. Memetakan hierarki melalui keindahan warna dan bentuk spasial yang menenangkan mata.</p>
-            <button class="btn">Masuk Dunia Spasial</button>
-        </a>
+            <!-- Pastel Tree V2 -->
+            <a href="app/pastel-tree-v2.html" class="tool-card card-visual">
+                <div class="card-icon">
+                    <i class="ph ph-tree-structure"></i>
+                </div>
+                <h2>Pastel Tree V2</h2>
+                <p class="desc">
+                    <strong>Pilar Visual-Estetik.</strong> Memetakan hierarki data lewat keindahan warna pastel dan bentuk spasial. Cocok bagi yang memproses informasi secara visual.
+                </p>
+                <div class="btn">
+                    Jelajahi Visual <i class="ph ph-arrow-right"></i>
+                </div>
+            </a>
 
-        <a href="app/dsl-editor-pro.html" class="card tech">
-            <span class="icon">💻</span>
-            <h2>DSL Editor Pro</h2>
-            <p>Pilar Teknis-Efisiensi. Kendali penuh melalui presisi perintah teks. Cepat, instan, dan tanpa kompromi.</p>
-            <button class="btn">Masuk Dunia Terminal</button>
-        </a>
-    </main>
+            <!-- DSL Editor Pro -->
+            <a href="app/dsl-editor-pro.html" class="tool-card card-tech">
+                <div class="card-icon">
+                    <i class="ph ph-terminal-window"></i>
+                </div>
+                <h2>DSL Editor Pro</h2>
+                <p class="desc">
+                    <strong>Pilar Teknis.</strong> Kendali penuh lewat perintah teks presisi. Untuk yang mencintai efisiensi terminal — cepat, instan, tanpa kompromi.
+                </p>
+                <div class="btn">
+                    Buka Terminal <i class="ph ph-arrow-right"></i>
+                </div>
+            </a>
+        </main>
 
-    <footer>
-        &copy; 2026 RaaRion Ecosystem • Terus Berkarya, Jangan Dirubah Dunia
-    </footer>
-
+        <footer>
+            &copy; 2026 RaaRion Ecosystem • Terus Berkarya, Jangan Dirubah Dunia
+        </footer>
+    </div>
 </body>
 </html>
