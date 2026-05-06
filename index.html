@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RaaRion Data Management | Portal Ekosistem</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-human: #fb7185; /* Rose for DataBestie */
+            --accent-visual: #34d399; /* Emerald for PastelTree */
+            --accent-tech: #38bdf8;   /* Sky for DSLEditor */
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            overflow-x: hidden;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 4rem;
+            max-width: 800px;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            letter-spacing: -1px;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, var(--accent-human), var(--accent-tech));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .portal-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            width: 100%;
+            max-width: 1100px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            text-align: center;
+            text-decoration: none;
+            color: inherit;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            transition: var(--transition);
+        }
+
+        /* Card Variations */
+        .card.human::before { background: var(--accent-human); }
+        .card.visual::before { background: var(--accent-visual); }
+        .card.tech::before { background: var(--accent-tech); }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        .icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 2rem;
+            flex-grow: 1;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+
+        .human .btn { background: var(--accent-human); color: white; }
+        .visual .btn { background: var(--accent-visual); color: #064e3b; }
+        .tech .btn { background: var(--accent-tech); color: #082f49; }
+
+        .btn:hover {
+            filter: brightness(1.2);
+            letter-spacing: 1px;
+        }
+
+        footer {
+            margin-top: 5rem;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 768px) {
+            header h1 { font-size: 2.2rem; }
+            .portal-container { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>RaaRion Data Management</h1>
+        <p>Satu Manifesto, Tiga Wajah. Pilih pintu yang paling sesuai dengan caramu berinteraksi dengan data.</p>
+    </header>
+
+    <main class="portal-container">
+        <a href="app/data-bestie-chat.html" class="card human">
+            <span class="icon">💬</span>
+            <h2>Data Bestie Chat</h2>
+            <p>Pilar Humanis. Mengolah data terasa seperti mengobrol dengan teman. Solusi bagi yang menginginkan bimbingan dan empati.</p>
+            <button class="btn">Masuk Dunia Verbal</button>
+        </a>
+
+        <a href="app/pastel-tree-v2.html" class="card visual">
+            <span class="icon">🌳</span>
+            <h2>Pastel Tree V2</h2>
+            <p>Pilar Visual-Estetik. Memetakan hierarki melalui keindahan warna dan bentuk spasial yang menenangkan mata.</p>
+            <button class="btn">Masuk Dunia Spasial</button>
+        </a>
+
+        <a href="app/dsl-editor-pro.html" class="card tech">
+            <span class="icon">💻</span>
+            <h2>DSL Editor Pro</h2>
+            <p>Pilar Teknis-Efisiensi. Kendali penuh melalui presisi perintah teks. Cepat, instan, dan tanpa kompromi.</p>
+            <button class="btn">Masuk Dunia Terminal</button>
+        </a>
+    </main>
+
+    <footer>
+        &copy; 2026 RaaRion Ecosystem • Terus Berkarya, Jangan Dirubah Dunia
+    </footer>
+
+</body>
+</html>
